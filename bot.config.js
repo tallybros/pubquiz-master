@@ -11,8 +11,8 @@ module.exports = {
   promptedBy: "Tally Brostowsky",  // shown in footer as "Prompted by ..."
 
   // --- API & Model ---
-  api:   "anthropic",              // "anthropic" or "openai"
-  model: "claude-haiku-4-5-20251001",
+  api:   "openai",              // "anthropic" or "openai"
+  model: "gpt-4o",
   // Anthropic models: claude-haiku-4-5-20251001 | claude-sonnet-4-6 | claude-opus-4-6
   // OpenAI models:    gpt-4o-mini | gpt-4o
 
