@@ -20,7 +20,7 @@ module.exports = {
   webSearch: true,   // true = live internet access (recommended with OpenAI)
 
   // --- Conversation starters (leave [] to hide) ---
-  starters: ["Let's play"],
+  starters: ["Let's play 🎉"],
 
   // --- System prompt ---
   prompt: `##Role & Task
