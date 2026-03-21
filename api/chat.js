@@ -34,9 +34,18 @@ async function callOpenAI(messages, apiKey) {
     instructions: SYSTEM_PROMPT,
     input:        messages,
   };
+
+  const tools = [];
   if (BOT.webSearch) {
-    body.tools = [{ type: 'web_search_preview' }];
+    tools.push({ type: 'web_search_preview' });
   }
+  if (BOT.vectorStoreId) {
+    tools.push({ type: 'file_search', vector_store_ids: [BOT.vectorStoreId] });
+  }
+  if (tools.length > 0) {
+    body.tools = tools;
+  }
+
   const payload = JSON.stringify(body);
   const result  = await httpsPost('api.openai.com', '/v1/responses', payload, {
     'Content-Type':   'application/json',
@@ -70,11 +79,9 @@ function httpsPost(hostname, path, payload, headers) {
 
 module.exports = async function(req, res) {
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
-
   const messages = req.body && req.body.messages;
   if (!Array.isArray(messages) || messages.length === 0)
     return res.status(400).json({ error: 'messages array missing' });
-
   try {
     let text;
     if (API === 'openai') {
@@ -86,11 +93,9 @@ module.exports = async function(req, res) {
       if (!apiKey) return res.status(500).json({ error: 'ANTHROPIC_API_KEY not set in Vercel environment variables' });
       text = await callAnthropic(messages, apiKey);
     }
-
     return res.status(200).json({
       content: [{ type: 'text', text: text || 'I could not generate a response. Please try again.' }]
     });
-
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
