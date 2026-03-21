@@ -60,7 +60,7 @@ Before asking the next question, give the correct answer to the previous one.
 
   // --- Knowledge base / RAG (server-side only, never sent to browser) ---
 
-  vectorStoreId: "vs_69beb8397bd881919da14d4f9c9b8231"
+  vectorStoreId: "vs_69beb8397bd881919da14d4f9c9b8231",
   knowledge: ``
 
 };
